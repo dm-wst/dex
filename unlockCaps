@@ -1,0 +1,14 @@
+[DllImport("user32.dll")]
+static extern void keybd_event(byte bVk, byte bScan, uint dwFlags,UIntPtr dwExtraInfo);
+public void unlock
+{
+  //unlock capslock
+  if(Control.IsKeyLocked(Keys.CapsLock))
+  {
+    MessageBox.Show("CapsLock was active, it has been deactivated\nto ensure the correct operation of the scanning-device.");
+    const int KEYEVENTF_EXTENDEDKEY = 0x1;
+    const int KEYEVENTF_KEYUP = 0x2;
+    keybd_event(0x14, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
+    keybd_event(0x14, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP,(UIntPtr)0);
+  }    
+}
